@@ -11,7 +11,7 @@ function onFormSubmit(evt) {
 
   let delayTime = Number(delay.value);
 
-  for (i = 1; i <= amount.value; i += 1) {
+  for (let i = 1; i <= amount.value; i += 1) {
     createPromise(i, delayTime)
       .then(sol => Notify.success(sol))
       .catch(error => Notify.failure(error));
