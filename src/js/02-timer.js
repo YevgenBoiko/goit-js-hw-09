@@ -20,10 +20,7 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     timer = selectedDates[0].getTime() - options.defaultDate.getTime();
-    days.textContent = addLeadingZero(convertMs(timer).days);
-    hours.textContent = addLeadingZero(convertMs(timer).hours);
-    minutes.textContent = addLeadingZero(convertMs(timer).minutes);
-    seconds.textContent = addLeadingZero(convertMs(timer).seconds);
+    convertToDate(timer);
 
     if (timer > 0) {
       startBtn.disabled = false;
@@ -42,19 +39,23 @@ flatpickr('#datetime-picker', options);
 startBtn.addEventListener('click', onStartClick);
 
 function onStartClick() {
-  interval = setInterval(() => {
-    startBtn.disabled = true;
-    days.textContent = addLeadingZero(convertMs(timer).days);
-    hours.textContent = addLeadingZero(convertMs(timer).hours);
-    minutes.textContent = addLeadingZero(convertMs(timer).minutes);
-    seconds.textContent = addLeadingZero(convertMs(timer).seconds);
+  startBtn.disabled = true;
 
+  interval = setInterval(() => {
+    convertToDate(timer);
     timer -= 1000;
 
     if (timer < 0) {
       clearInterval(interval);
     }
   }, 1000);
+}
+
+function convertToDate(timerData) {
+  days.textContent = addLeadingZero(convertMs(timerData).days);
+  hours.textContent = addLeadingZero(convertMs(timerData).hours);
+  minutes.textContent = addLeadingZero(convertMs(timerData).minutes);
+  seconds.textContent = addLeadingZero(convertMs(timerData).seconds);
 }
 
 function addLeadingZero(value) {
